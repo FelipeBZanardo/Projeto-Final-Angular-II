@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row my-4">
+      <div class="col-4" *ngFor="let bet of bets">
+        <mat-card class="mb-4">
+          <mat-card-header>
+            <mat-card-title>{{ 'N° Sorteio: '  + bet.raffleNumber }}</mat-card-title>
+          </mat-card-header>
+          <mat-divider class="my-3"></mat-divider>
+  
+          <mat-card-content>
+            <p>
+              <strong>Data da Aposta:</strong>
+              {{ bet.betDate }}
+            </p>
+            <mat-chip-set>
+              <mat-chip
+                *ngFor="let number of bet.dozens">
+                {{ (number | json).substring(12, (number | json).length - 3)}}
+              </mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+          <mat-card-actions class="d-flex justify-content-end">
+            <button
+              mat-icon-button
+              color="primary"
+              routerLink="/bet/edit/{{ bet.id }}"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(bet.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+
+          <mat-accordion >
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-description>
+                 Visualizar Resultado da aposta
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <app-result></app-result>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  
+
