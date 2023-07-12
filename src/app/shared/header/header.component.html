@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <button mat-button routerLink="/">App Gestão</button>
+    <span class="spacer"></span>
+    <div class="menu">
+      <button mat-button routerLink="/users">Usuários</button>
+      <button mat-button routerLink="/users/create">Cadastrar Usuário</button>
+      <button mat-button routerLink="/bet">Apostas</button>
+      <button mat-button routerLink="/bet/create">Cadastrar Aposta</button>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+</mat-toolbar>
+  
