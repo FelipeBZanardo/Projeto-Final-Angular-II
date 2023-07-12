@@ -1,0 +1,7 @@
+.bg-primary {
+    background-color: #3f51b5 !important;
+}
+  
+mat-form-field {
+    width: 100%;
+}
