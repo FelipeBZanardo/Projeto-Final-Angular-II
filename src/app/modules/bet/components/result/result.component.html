@@ -1,0 +1,46 @@
+<mat-card class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Resultado</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+
+    <mat-card-content>
+      <p>
+        <strong>Número do sorteio:</strong>
+        {{ result.raffleNumber }}
+      </p>
+      <p>
+        <strong>Data do sorteio:</strong>
+        {{ result.raffleDate }}
+      </p>
+      <p>
+        <strong>Dezenas Sorteadas:</strong>
+        <mat-chip-set>
+            <mat-chip
+              *ngFor="let numberDrawn of result.dozensDrawn">
+              {{ numberDrawn }}
+            </mat-chip>
+        </mat-chip-set>
+        <strong>Dezenas Apostadas:</strong>
+        <mat-chip-set>
+            <mat-chip
+              *ngFor="let numberBet of result.dozensBet">
+              {{ numberBet }}
+            </mat-chip>
+          </mat-chip-set>
+      <p>
+        <strong>Prêmio acumulado:</strong>
+        {{ result.accumulated ? 'Sim' : 'Não' }}
+      </p>
+      <p>
+        <strong>Pontuação:</strong>
+        {{ result.score }}
+      </p>
+      <p>
+        <strong>Prêmio:</strong>
+        {{ result.award }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+
