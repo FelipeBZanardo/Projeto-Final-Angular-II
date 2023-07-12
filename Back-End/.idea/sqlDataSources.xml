@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="0502d4ca-8114-4bf2-93f6-804ac09aafa9" name="testdb Mapping">
+      <data-sources db="94c347e0-a327-4220-9f95-a920e602818b" ddl="1005222b-aade-4d4d-ab5a-4538e1fae180" />
+      <scope>
+        <node kind="database" qname="TESTDB">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+    <mapping uuid="f3429246-5dfc-4630-ba04-6a3f62eb953f" name="testdb Mapping [2]">
+      <data-sources db="c961db4f-7139-40d0-a995-685140c67637" ddl="1005222b-aade-4d4d-ab5a-4538e1fae180" />
+      <scope>
+        <node kind="database" qname="TESTDB">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>
