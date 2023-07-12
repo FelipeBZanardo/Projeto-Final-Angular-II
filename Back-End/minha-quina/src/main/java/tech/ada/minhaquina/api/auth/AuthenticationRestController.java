@@ -19,6 +19,7 @@ import tech.ada.minhaquina.api.usuario.UsuarioRepository;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Log
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthenticationRestController {
 
     private final UsuarioRepository userJpaRepository;
