@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row my-4">
+      <div class="col-4" *ngFor="let user of users">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>{{ user.username }}</mat-card-title>
+          </mat-card-header>
+  
+          <mat-divider class="my-3"></mat-divider>
+  
+          <mat-card-content>
+            <p><strong>E-mail:</strong> {{ user.email }}</p>
+            <p><strong>Tipo:</strong> {{ user.role }}</p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex justify-content-end">
+            <button
+              mat-icon-button
+              color="primary"
+              routerLink="/users/edit/{{ user.id }}"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(user.id!)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  
