@@ -17,6 +17,7 @@ import java.util.List;
 @SecurityRequirement(name = "User")
 @RestController
 @RequestMapping("/minha-quina/api/v1/apostas")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ApostaRestController {
 
     private final ApostaService apostaService;
