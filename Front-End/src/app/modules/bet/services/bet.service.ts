@@ -18,10 +18,19 @@ export class BetService {
   public create(bet: Bet): boolean {
     bet.id =  Math.floor(Math.random() * (Math.floor(1000) - Math.ceil(1)) + Math.ceil(1));
     const bets = this.findAll();
-    bet.dozens = bet.dozens.map(d => Object.values(d)[0]);
+    bet.dozens = bet.dozens.map(d => parseInt(Object.values(d)[0]));
+    bet.betDate = this.formatDate(bet.betDate);
     bets.push(bet);
     this.setLocalStorage(bets);
     return true;
+  }
+
+  private formatDate(date: string): string{
+    const year = date.substring(4);
+    const month = date.substring(2,4);
+    const day = date.substring(0,2);
+
+    return year + '-' + month + '-' + day;
   }
 
   public delete(id: number): void {

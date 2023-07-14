@@ -46,15 +46,16 @@ export class CreateBetComponent implements OnInit {
       control: AbstractControl
     ): ValidationErrors | null => {
       const dozens = control.value;
-      const selectedNumbers = dozens.map((dozen: any) => dozen.number);
-
+      const selectedNumbers = dozens
+      .map((dozen: any) => dozen.number)
+      .filter((n: any) => n !== null);
+      
       const uniqueNumbers = [...new Set(selectedNumbers)];
 
-      if (uniqueNumbers.length === selectedNumbers.length) {
-        return null;
-      } else {
+      if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
         return { duplicateNumbers: true };
-      }
+      else 
+        return null;
     };
 
     this.betForm = new FormGroup({
@@ -112,8 +113,8 @@ export class CreateBetComponent implements OnInit {
   }
 
   private updateForm(): void {
-    const dozensForm = this.betForm.get('dozens') as FormArray;
-    dozensForm.setValue([
+    
+    this.dozens.setValue([
       { number: this.bet?.dozens[0] },
       { number: this.bet?.dozens[1] },
       { number: this.bet?.dozens[2] },

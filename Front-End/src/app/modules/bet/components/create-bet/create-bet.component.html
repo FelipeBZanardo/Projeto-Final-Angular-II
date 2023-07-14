@@ -27,17 +27,17 @@
             <div [formGroupName]="index" class="justify-content-between">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'Dezena ' + (index + 1) }}</mat-label>
-                <input matInput formControlName="number" type="number" mask="90">
-                <mat-error *ngIf="dozenForm.hasError('duplicateNumbers')">
-                  As dezenas não podem ser repetidas.
-                </mat-error>
-                <!-- <mat-error>
+                <input matInput formControlName="number" mask="90">
+                <mat-error>
                   Digite um número de 1 a 80
-                </mat-error>  -->
+                </mat-error>
               </mat-form-field>
             </div>
           </ng-container>
         </ng-container>
+        <mat-error *ngIf="dozens.hasError('duplicateNumbers')">
+          As dezenas não podem ser repetidas.
+        </mat-error>
       </fieldset>
     </fieldset>
     <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
