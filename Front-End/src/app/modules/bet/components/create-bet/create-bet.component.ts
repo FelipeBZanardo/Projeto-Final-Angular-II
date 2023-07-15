@@ -10,6 +10,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
+import { distinctUntilChanged, first, map } from 'rxjs';
+import { BetDto } from 'src/app/models/bet.dto';
 
 @Component({
   selector: 'app-create-bet',
@@ -17,7 +19,6 @@ import { BetService } from '../../services/bet.service';
   styleUrls: ['./create-bet.component.css'],
 })
 export class CreateBetComponent implements OnInit {
-  public bet?: Bet;
   public id?: number;
   public title = 'Nova Aposta';
 
@@ -31,11 +32,8 @@ export class CreateBetComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-
     this.id = this.route.snapshot.params['id'];
-
     if (this.id) {
-      this.bet = this.betService.findById(this.id);
       this.title = 'Editar Aposta';
       this.updateForm();
     }
@@ -54,8 +52,8 @@ export class CreateBetComponent implements OnInit {
 
       if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
         return { duplicateNumbers: true };
-      else 
-        return null;
+
+      return null;
     };
 
     this.betForm = new FormGroup({
@@ -108,32 +106,77 @@ export class CreateBetComponent implements OnInit {
     });
   }
 
-  get dozens() {
-    return this.betForm.controls['dozens'] as FormArray;
-  }
-
-  private updateForm(): void {
-    
-    this.dozens.setValue([
-      { number: this.bet?.dozens[0] },
-      { number: this.bet?.dozens[1] },
-      { number: this.bet?.dozens[2] },
-      { number: this.bet?.dozens[3] },
-      { number: this.bet?.dozens[4] },
-    ]);
-    this.betForm.patchValue(this.bet as Bet);
-  }
-
   public onSubmit(): void {
     if (this.id) {
-      this.betService.update(this.betForm.getRawValue());
+      this.betService.update(this.betForm.getRawValue())
+      .pipe(
+        first(),
+        distinctUntilChanged(
+          (prev, next) => JSON.stringify(prev) === JSON.stringify(next)
+        ))
+      .subscribe(
+        {
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.router.navigate(['/bet']);
+        }});
     } else {
-      this.betService.create(this.betForm.getRawValue());
+      this.betService.create(this.betForm.getRawValue())
+      .pipe(first())
+      .subscribe(
+        {
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.router.navigate(['/bet']);
+        }});
     }
-    this.router.navigate(['/bet']);
+    
   }
 
   public onCancel(): void {
     this.router.navigate(['/bet']);
+  }
+
+  get dozens() {
+    return this.betForm.controls['dozens'] as FormArray;
+  }
+
+  private setValueDozens(bet: Bet){
+    this.dozens.setValue([   
+      { number: bet.dozens[0] },
+      { number: bet.dozens[1] },
+      { number: bet.dozens[2] },
+      { number: bet.dozens[3] },
+      { number: bet.dozens[4] },
+    ]);
+  }
+
+  private updateForm(): void {
+    this.betService
+    .findById(this.id!)
+    .pipe(
+      first(),
+      map((betDto: BetDto) => {
+          const mappedBet: Bet = {
+            id: betDto.id!,
+            raffleNumber: betDto.numeroSorteio,
+            dozens: betDto.dezenas,
+            betDate: this.betService.formatDate(betDto.dataJogo)
+          }
+          return mappedBet;
+        }))
+    .subscribe({
+      next: (response) => {
+        this.setValueDozens(response);
+        this.betForm.patchValue(response as Bet);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 }
