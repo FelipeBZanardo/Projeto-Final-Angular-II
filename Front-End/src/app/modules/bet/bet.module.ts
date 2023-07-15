@@ -16,29 +16,30 @@ import { BetComponent } from './bet.component';
 import { CreateBetComponent } from './components/create-bet/create-bet.component';
 import { ListBetComponent } from './components/list-bet/list-bet.component';
 import { ResultComponent } from './components/result/result.component';
-
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-    declarations: [
-        BetComponent,
-        CreateBetComponent,
-        ListBetComponent,
-        ResultComponent
-    ],
-    imports: [
-        BetRoutingModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatCardModule,
-        MatIconModule,
-        MatDividerModule,
-        MatSelectModule,
-        MatChipsModule,
-        MatExpansionModule,
-    ]
+  declarations: [
+    BetComponent,
+    CreateBetComponent,
+    ListBetComponent,
+    ResultComponent,
+  ],
+  imports: [
+    BetRoutingModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatExpansionModule,
+    NgxMaskModule,
+  ],
 })
-export class BetModule { }
+export class BetModule {}
