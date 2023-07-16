@@ -51,7 +51,12 @@ export class BetService {
   }
 
   private mapBet(bet: Bet): BetDto{
-    bet.dozens = bet.dozens.map(d => parseInt(Object.values(d)[0]));
+    bet.dozens = bet.dozens.map(d => parseInt(Object.values(d)[0]))
+    .sort((a,b) => {
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+    });
     bet.betDate = this.formatDateISO(bet.betDate);
     const betDto: BetDto = {
       numeroSorteio: bet.raffleNumber,

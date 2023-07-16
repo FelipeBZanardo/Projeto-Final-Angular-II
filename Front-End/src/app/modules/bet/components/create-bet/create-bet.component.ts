@@ -8,10 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, first, map } from 'rxjs';
+import { BetDto } from 'src/app/models/bet.dto';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
-import { catchError, distinctUntilChanged, first, map } from 'rxjs';
-import { BetDto } from 'src/app/models/bet.dto';
 
 @Component({
   selector: 'app-create-bet',
