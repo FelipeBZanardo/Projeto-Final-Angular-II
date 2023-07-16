@@ -80,4 +80,10 @@ public class UsuarioService {
     // .map(UsuarioModel)
     // .toList();
     // }
+    // public List<UsuarioModel> getAllUsuarios(UserDetails userDetails) {
+    // return usuarioRepository.findAll()
+    // .stream()
+    // .map(UsuarioModel)
+    // .toList();
+    // }
 }
