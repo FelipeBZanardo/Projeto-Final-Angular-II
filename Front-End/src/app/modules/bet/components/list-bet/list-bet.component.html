@@ -10,7 +10,7 @@
           <mat-card-content>
             <p>
               <strong>Data da Aposta:</strong>
-              {{ bet.betDate }}
+              {{ bet.betDate | date: 'dd/MM/yyyy'}}
             </p>
             <mat-chip-set>
               <mat-chip

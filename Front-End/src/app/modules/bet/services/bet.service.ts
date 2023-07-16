@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BetDto } from 'src/app/models/bet.dto';
 import { Bet } from 'src/app/models/bet.model';
 
 @Injectable({
@@ -6,26 +9,32 @@ import { Bet } from 'src/app/models/bet.model';
 })
 export class BetService {
 
-  public findAll(): Bet[] {
-    return JSON.parse(localStorage.getItem('BETS') || '[]');
+  constructor(private http: HttpClient) {}
+
+  private urlApi = "http://localhost:8080/minha-quina/api/v1/apostas";
+  private headers = { 'Authorization': `Bearer ${this.tokenByLocalStorage}` }
+
+  public findAll(): Observable<BetDto[]> {
+    return this.http.get<BetDto[]>(this.urlApi, {headers: this.headers});
   }
 
-  public findById(id: number): Bet | undefined {
-    const bets = this.findAll();
-    return bets.find((b) => b.id == id);
+  public findById(id: number): Observable<BetDto> {
+    return this.http.get<BetDto>(`${this.urlApi}/${id}`, {headers: this.headers});
   }
 
-  public create(bet: Bet): boolean {
-    bet.id =  Math.floor(Math.random() * (Math.floor(1000) - Math.ceil(1)) + Math.ceil(1));
-    const bets = this.findAll();
-    bet.dozens = bet.dozens.map(d => parseInt(Object.values(d)[0]));
-    bet.betDate = this.formatDate(bet.betDate);
-    bets.push(bet);
-    this.setLocalStorage(bets);
-    return true;
+  public create(bet: Bet): Observable<BetDto> {
+    return this.http.post<BetDto>(this.urlApi, this.mapBet(bet), {headers: this.headers});
   }
 
-  private formatDate(date: string): string{
+  public delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlApi}/${id}`, {headers: this.headers});
+  }
+
+  public update(bet: Bet) : Observable<Bet>{
+    return this.http.put<Bet>(`${this.urlApi}/${bet.id}`, this.mapBet(bet), {headers: this.headers});
+  }
+
+  public formatDateISO(date: string): string{
     const year = date.substring(4);
     const month = date.substring(2,4);
     const day = date.substring(0,2);
@@ -33,25 +42,32 @@ export class BetService {
     return year + '-' + month + '-' + day;
   }
 
-  public delete(id: number): void {
-    const bets = this.findAll();
-    let idFound = bets.findIndex(b => b.id === id);
-    bets.splice(idFound, 1);
-    this.setLocalStorage(bets);
-    
+  public formatDate(date: string): string{
+    const day = date.substring(8);
+    const month = date.substring(5,7);
+    const year = date.substring(0,4);
+
+    return day + month + year;
   }
 
-  private setLocalStorage(bets: Bet[]): void {
-    localStorage.setItem('BETS', JSON.stringify(bets));
+  private mapBet(bet: Bet): BetDto{
+    bet.dozens = bet.dozens.map(d => parseInt(Object.values(d)[0]))
+    .sort((a,b) => {
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+    });
+    bet.betDate = this.formatDateISO(bet.betDate);
+    const betDto: BetDto = {
+      numeroSorteio: bet.raffleNumber,
+      dezenas: bet.dozens,
+      dataJogo: bet.betDate
+    };
+    return betDto;
   }
 
-  public update(bet: Bet) : boolean{
-    const bets = this.findAll();
-    bet.dozens = bet.dozens.map(d => Object.values(d)[0]);
-    let idFound = bets.findIndex(b => b.id === bet.id);
-    if (idFound < 0) return false;
-    bets[idFound] = bet;
-    this.setLocalStorage(bets);
-    return true;
+  private get tokenByLocalStorage() : string {
+    localStorage.setItem('TOKEN', JSON.stringify('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi5hZG1pbiIsImlhdCI6MTY4OTUwOTI2NiwiZXhwIjoxNjg5NTEyODY2fQ.E9RWWaK3dAP3Lj8LqqXnr7eA0d678nYe9DPw3kol9MI'));
+    return JSON.parse(localStorage.getItem('TOKEN') || '');
   }
 }

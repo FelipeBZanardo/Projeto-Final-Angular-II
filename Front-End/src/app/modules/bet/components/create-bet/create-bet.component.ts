@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, first, map } from 'rxjs';
+import { BetDto } from 'src/app/models/bet.dto';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
 
@@ -17,9 +19,9 @@ import { BetService } from '../../services/bet.service';
   styleUrls: ['./create-bet.component.css'],
 })
 export class CreateBetComponent implements OnInit {
-  public bet?: Bet;
   public id?: number;
   public title = 'Nova Aposta';
+  public errorMessage?: string;
 
   public betForm!: FormGroup;
 
@@ -31,32 +33,14 @@ export class CreateBetComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-
     this.id = this.route.snapshot.params['id'];
-
     if (this.id) {
-      this.bet = this.betService.findById(this.id);
       this.title = 'Editar Aposta';
       this.updateForm();
     }
   }
 
   public buildForm(): void {
-    const uniqueNumbersValidator = (
-      control: AbstractControl
-    ): ValidationErrors | null => {
-      const dozens = control.value;
-      const selectedNumbers = dozens
-      .map((dozen: any) => dozen.number)
-      .filter((n: any) => n !== null);
-      
-      const uniqueNumbers = [...new Set(selectedNumbers)];
-
-      if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
-        return { duplicateNumbers: true };
-      else 
-        return null;
-    };
 
     this.betForm = new FormGroup({
       id: new FormControl(),
@@ -99,7 +83,7 @@ export class CreateBetComponent implements OnInit {
             ]),
           }),
         ],
-        { validators: uniqueNumbersValidator }
+        { validators: this.uniqueNumbersValidator }
       ),
       betDate: new FormControl(null, [
         Validators.required,
@@ -108,32 +92,92 @@ export class CreateBetComponent implements OnInit {
     });
   }
 
-  get dozens() {
-    return this.betForm.controls['dozens'] as FormArray;
-  }
-
-  private updateForm(): void {
-    
-    this.dozens.setValue([
-      { number: this.bet?.dozens[0] },
-      { number: this.bet?.dozens[1] },
-      { number: this.bet?.dozens[2] },
-      { number: this.bet?.dozens[3] },
-      { number: this.bet?.dozens[4] },
-    ]);
-    this.betForm.patchValue(this.bet as Bet);
-  }
-
   public onSubmit(): void {
     if (this.id) {
-      this.betService.update(this.betForm.getRawValue());
+      this.betService.update(this.betForm.getRawValue())
+      .pipe(
+        first(),
+        distinctUntilChanged(
+          (prev, next) => JSON.stringify(prev) === JSON.stringify(next)
+        ))
+      .subscribe(
+        {
+        error: (err) => {
+          this.errorMessage = err.error;
+        },
+        complete: () => {
+          this.router.navigate(['/bet']);
+        }});
     } else {
-      this.betService.create(this.betForm.getRawValue());
+      this.betService.create(this.betForm.getRawValue())
+      .pipe(first(),
+      )
+      .subscribe(
+        {
+        error: (err) => {
+          this.errorMessage = err.error;
+        },
+        complete: () => {
+          this.router.navigate(['/bet']);
+        }});
     }
-    this.router.navigate(['/bet']);
+    
   }
 
   public onCancel(): void {
     this.router.navigate(['/bet']);
   }
+
+  get dozens() {
+    return this.betForm.controls['dozens'] as FormArray;
+  }
+
+  private setValueDozens(bet: Bet){
+    this.dozens.setValue([   
+      { number: bet.dozens[0] },
+      { number: bet.dozens[1] },
+      { number: bet.dozens[2] },
+      { number: bet.dozens[3] },
+      { number: bet.dozens[4] },
+    ]);
+  }
+
+  private updateForm(): void {
+    this.betService
+    .findById(this.id!)
+    .pipe(
+      first(),
+      map((betDto: BetDto) => {
+          const mappedBet: Bet = {
+            id: betDto.id!,
+            raffleNumber: betDto.numeroSorteio,
+            dozens: betDto.dezenas,
+            betDate: this.betService.formatDate(betDto.dataJogo)
+          }
+          return mappedBet;
+        }))
+    .subscribe({
+      next: (response) => {
+        this.setValueDozens(response);
+        this.betForm.patchValue(response as Bet);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  private uniqueNumbersValidator = (control: AbstractControl): ValidationErrors | null => {
+    const dozens = control.value;
+    const selectedNumbers = dozens
+    .map((dozen: any) => dozen.number)
+    .filter((n: any) => n !== null);
+    
+    const uniqueNumbers = [...new Set(selectedNumbers)];
+
+    if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
+      return { duplicateNumbers: true };
+
+    return null;
+  };
 }
