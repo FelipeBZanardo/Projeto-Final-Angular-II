@@ -21,6 +21,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/bet/bet.module').then(m => m.BetModule) 
   }, 
   {
+    path: 'lottery',
+    loadChildren: () =>
+      import('./modules/lottery/lottery.module').then(m => m.LotteryModule)
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
