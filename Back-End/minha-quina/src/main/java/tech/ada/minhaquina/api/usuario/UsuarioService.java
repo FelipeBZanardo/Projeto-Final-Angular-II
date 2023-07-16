@@ -3,7 +3,9 @@ package tech.ada.minhaquina.api.usuario;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tech.ada.minhaquina.api.aposta.ApostaDTO;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -16,6 +18,15 @@ public class UsuarioService {
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<UsuarioResponse> getAllUsuarios() {
+        return usuarioRepository.findAll().stream().map(UsuarioResponse::new).toList();
+    }
+
+    public UsuarioResponse getUsuarioById(Long id) {
+        return usuarioRepository.findById(id).map(UsuarioResponse::new)
+                .orElseThrow(() -> new NoSuchElementException("Id de usuário não existe"));
     }
 
     public UsuarioResponse saveUsuario(@Valid UsuarioRequest usuarioRequest) {
@@ -60,4 +71,5 @@ public class UsuarioService {
                 .orElseThrow(() -> new NoSuchElementException("Id de usuário não existe"));
         usuarioRepository.delete(usuario);
     }
+
 }
