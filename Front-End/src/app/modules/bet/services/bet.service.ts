@@ -67,7 +67,7 @@ export class BetService {
   }
 
   private get tokenByLocalStorage() : string {
-    localStorage.setItem('TOKEN', JSON.stringify('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi5hZG1pbiIsImlhdCI6MTY4OTUwOTI2NiwiZXhwIjoxNjg5NTEyODY2fQ.E9RWWaK3dAP3Lj8LqqXnr7eA0d678nYe9DPw3kol9MI'));
+    localStorage.setItem('TOKEN', JSON.stringify('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi5hZG1pbiIsImlhdCI6MTY4OTUyMDYxNSwiZXhwIjoxNjg5NTI0MjE1fQ.D4tUeXtkH9Jed-F9g1Y3tD15OednT97HWVDPMSfvGmA'));
     return JSON.parse(localStorage.getItem('TOKEN') || '');
   }
 }

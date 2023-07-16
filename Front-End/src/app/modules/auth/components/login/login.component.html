@@ -11,7 +11,8 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
-            <input matInput [(ngModel)]="password" name="password" />
+            <input matInput [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'"/>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </mat-form-field>
           <button
             mat-flat-button

@@ -10,10 +10,10 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
   public username?: string;
   public password?: string;
   public users!: User[];
+  public hide = true;
 
   constructor(private router: Router, private authService: AuthService, private usersService: UsersService) {}
 
