@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   public password?: string;
   public users!: User[];
   public hide = true;
+  public errorMessage?: string;
 
   constructor(private router: Router, private authService: AuthService, private usersService: UsersService) {}
 
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('TOKEN', JSON.stringify(response.token));
         },
         error: (err) => {
-          console.log(err);
+          this.errorMessage = 'Credenciais inválidas. Tente novamente!';
         },
         complete: () => {
           this.router.navigate(['/users']);
