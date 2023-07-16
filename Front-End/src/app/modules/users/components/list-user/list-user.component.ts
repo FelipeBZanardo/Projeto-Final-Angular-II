@@ -43,7 +43,7 @@ export class ListUserComponent {
               id: userDto.id!,
               username: userDto.username,
               email: userDto.email,
-              password: userDto.password,
+              password: userDto.password!,
               role: userDto.role,
             };
             return mappedUser;

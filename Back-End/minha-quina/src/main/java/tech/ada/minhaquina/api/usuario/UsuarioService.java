@@ -73,17 +73,4 @@ public class UsuarioService {
                 .orElseThrow(() -> new NoSuchElementException("Id de usuário não existe"));
         usuarioRepository.delete(usuario);
     }
-
-    // public List<UsuarioModel> getAllUsuarios(UserDetails userDetails) {
-    // return usuarioRepository.findAll()
-    // .stream()
-    // .map(UsuarioModel)
-    // .toList();
-    // }
-    // public List<UsuarioModel> getAllUsuarios(UserDetails userDetails) {
-    // return usuarioRepository.findAll()
-    // .stream()
-    // .map(UsuarioModel)
-    // .toList();
-    // }
 }

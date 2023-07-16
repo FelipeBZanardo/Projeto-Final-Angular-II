@@ -1,52 +1,50 @@
 <div class="container my-4">
-    <h1 class="d-flex justify-content-center m-4">{{ title }}</h1>
-  
-    <form [formGroup]="userForm">
-      <fieldset>
-        <div class="row">
-          <div class="col-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Username</mat-label>
-              <input matInput formControlName="username" />
-            </mat-form-field>
-          </div>
-          <div class="col-6">
-            <mat-form-field appearance="outline">
-              <mat-label>E-mail</mat-label>
-              <input matInput formControlName="email" />
-            </mat-form-field>
-          </div>
+  <h1 class="d-flex justify-content-center m-4">{{ title }}</h1>
+
+  <form [formGroup]="userForm">
+    <fieldset>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" />
+          </mat-form-field>
         </div>
-        <div class="row">
-          <div class="col-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Senha</mat-label>
-              <input matInput formControlName="password" />
-            </mat-form-field>
-          </div>
-          <div class="col-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Tipo de usuário</mat-label>
-              <mat-select formControlName="role">
-                <mat-option *ngFor="let role of roles" [value]="role">
-                  {{ role }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
         </div>
-      </fieldset>
-      <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
-      <button
-        mat-flat-button
-        (click)="onSubmit()"
-        [disabled]="userForm.invalid"
-        color="primary"
-        cdkFocusInitial
-        type="button"
-      >
-        Salvar
-      </button>
-    </form>
-  </div>
-  
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput formControlName="password" />
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de usuário</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{ role }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <ng-container *ngIf="errorMessage">
+        <mat-error>
+          {{ errorMessage }}
+        </mat-error>
+      </ng-container>
+    </fieldset>
+    <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
+    <button mat-flat-button (click)="onSubmit()" [disabled]="userForm.invalid" color="primary" cdkFocusInitial
+      type="button">
+      Salvar
+    </button>
+  </form>
+</div>

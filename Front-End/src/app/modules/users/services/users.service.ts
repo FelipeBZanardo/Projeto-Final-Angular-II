@@ -13,18 +13,14 @@ export class UsersService {
   private urlApi = 'http://localhost:8080/minha-quina/api/v1/usuarios';
   private headers = { Authorization: `Bearer ${this.tokenByLocalStorage}` };
 
-  // todo: endpoint find all
   public findAll(): Observable<UserDto[]> {
-    return new Observable<UserDto[]>();
-    //   return this.http.get<UserDto[]>(this.urlApi, {headers: this.headers});
+    return this.http.get<UserDto[]>(this.urlApi, { headers: this.headers });
   }
 
-  // todo: endpoint find by id
   public findById(id: number): Observable<UserDto> {
-    return new Observable<UserDto>();
-    // return this.http.get<UserDto>(`${this.urlApi}/${id}`, {
-    //   headers: this.headers,
-    // });
+    return this.http.get<UserDto>(`${this.urlApi}/${id}`, {
+      headers: this.headers,
+    });
   }
 
   // todo: endpoint find by username
@@ -68,12 +64,6 @@ export class UsersService {
   }
 
   private get tokenByLocalStorage(): string {
-    localStorage.setItem(
-      'TOKEN',
-      JSON.stringify(
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZWxpcGUuemFuYXJkbyIsImlhdCI6MTY4OTQ3MjQ4OCwiZXhwIjoxNjg5NDc2MDg4fQ.qhW3VeH_nb0VsOmwGOy3fhFT8PBpX3otAFkf8H8cC4c'
-      )
-    );
     return JSON.parse(localStorage.getItem('TOKEN') || '');
   }
 }

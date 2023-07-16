@@ -16,6 +16,7 @@ export class CreateUserComponent implements OnInit {
   public id?: number;
   public title = 'Novo Usuário';
   public roles!: Role[];
+  public errorMessage?: string;
 
   public userForm!: FormGroup;
 
@@ -51,26 +52,26 @@ export class CreateUserComponent implements OnInit {
   }
 
   private updateForm(): void {
-    // this.usersService
-    //   .findById(this.id!)
-    //   .pipe(
-    //     first(),
-    //     map((userDto: UserDto) => {
-    //       const mappedUser: User = {
-    //         id: userDto.id!,
-    //         username: userDto.username,
-    //         email: userDto.email,
-    //         password: userDto.password,
-    //         role: userDto.email,
-    //       };
-    //       return mappedUser;
-    //     })
-    //   )
-    //   .subscribe({
-    //     error: (err) => {
-    //       console.log(err);
-    //     },
-    //   });
+    this.usersService
+      .findById(this.id!)
+      .pipe(
+        first(),
+        map((userDto: UserDto) => {
+          const mappedUser: User = {
+            id: userDto.id!,
+            username: userDto.username,
+            email: userDto.email,
+            password: userDto.password,
+            role: userDto.role,
+          };
+          return mappedUser;
+        })
+      )
+      .subscribe({
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   public onSubmit(): void {
@@ -85,6 +86,7 @@ export class CreateUserComponent implements OnInit {
         )
         .subscribe({
           error: (err) => {
+            this.errorMessage = err.error;
             console.log(err);
           },
           complete: () => {
@@ -97,6 +99,7 @@ export class CreateUserComponent implements OnInit {
         .pipe(first())
         .subscribe({
           error: (err) => {
+            this.errorMessage = err.error;
             console.log(err);
           },
           complete: () => {
