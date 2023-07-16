@@ -7,7 +7,12 @@ import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import tech.ada.minhaquina.api.aposta.ApostaDTO;
+
+import java.util.List;
 
 
 @SecurityRequirement(name = "Admin")
@@ -16,12 +21,25 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 @PreAuthorize("hasRole('ADMIN')")
 @Tag(name = "Usuários")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UsuarioRestController {
 
     private final UsuarioService usuarioService;
 
     public UsuarioRestController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
+    }
+
+    @Operation(description = "Lista todos os usuários")
+    @GetMapping
+    public List<UsuarioResponse> getAllUsuarios() {
+        return usuarioService.getAllUsuarios();
+    }
+
+    @Operation(description = "Busca usuário de acordo com seu Id")
+    @GetMapping("/{id}")
+    public UsuarioResponse getApostaById(@PathVariable Long id) {
+        return usuarioService.getUsuarioById(id);
     }
 
     @Operation(description = "Cadastro de um novo usuário/admin")
