@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, first, map } from 'rxjs';
-import { BetDto } from 'src/app/models/bet.dto';
+import { BetDto } from 'src/app/models/bet.dto.model';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
 

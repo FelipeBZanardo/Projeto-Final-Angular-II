@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BetDto } from 'src/app/models/bet.dto';
+import { BetDto } from 'src/app/models/bet.dto.model';
 import { Bet } from 'src/app/models/bet.model';
 
 @Injectable({
@@ -67,7 +67,6 @@ export class BetService {
   }
 
   private get tokenByLocalStorage() : string {
-    localStorage.setItem('TOKEN', JSON.stringify('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi5hZG1pbiIsImlhdCI6MTY4OTUwOTI2NiwiZXhwIjoxNjg5NTEyODY2fQ.E9RWWaK3dAP3Lj8LqqXnr7eA0d678nYe9DPw3kol9MI'));
     return JSON.parse(localStorage.getItem('TOKEN') || '');
   }
 }
