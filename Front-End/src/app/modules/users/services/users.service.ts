@@ -1,56 +1,79 @@
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
+import { UserDto } from 'src/app/models/user.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  private urlApi = 'http://localhost:8080/minha-quina/api/v1/usuarios';
+  private headers = { Authorization: `Bearer ${this.tokenByLocalStorage}` };
 
-  public findAll(): User[] {
-    return JSON.parse(localStorage.getItem('USERS') || '[]');
+  // todo: endpoint find all
+  public findAll(): Observable<UserDto[]> {
+    return new Observable<UserDto[]>();
+    //   return this.http.get<UserDto[]>(this.urlApi, {headers: this.headers});
   }
 
-  public findByUsername(username: string): User | undefined {
-    const users = this.findAll();
-    return users.find((u) => u.username === username);
+  // todo: endpoint find by id
+  public findById(id: number): Observable<UserDto> {
+    return new Observable<UserDto>();
+    // return this.http.get<UserDto>(`${this.urlApi}/${id}`, {
+    //   headers: this.headers,
+    // });
   }
 
-  public findById(id: number): User | undefined {
-    const users = this.findAll();
-    return users.find((u) => u.id == id);
+  // todo: endpoint find by username
+  public findByUsername(username: string): Observable<UserDto> {
+    return new Observable<UserDto>();
+    // return this.http.get<UserDto>(`${this.urlApi}/username/${username}`, {
+    //   headers: this.headers,
+    // });
   }
 
-  public create(user: User): boolean {
-    if (this.findByUsername(user.username)){
-      return false;
-    }
-    user.id =  Math.floor(Math.random() * (Math.floor(1000) - Math.ceil(1)) + Math.ceil(1));
-    const users = this.findAll();
-    users.push(user);
-    this.setLocalStorage(users);
-    return true;
+  public create(user: User): Observable<UserDto> {
+    return this.http.post<UserDto>(
+      `${this.urlApi}/cadastro`,
+      this.mapUser(user),
+      { headers: this.headers }
+    );
   }
 
-  public delete(id: number): void {
-    const users = this.findAll();
-    let idFound = users.findIndex(u => u.id === id);
-    users.splice(idFound, 1);
-    this.setLocalStorage(users);
-    
+  public delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlApi}/${id}/deletar`, {
+      headers: this.headers,
+    });
   }
 
-  private setLocalStorage(users: User[]): void {
-    localStorage.setItem('USERS', JSON.stringify(users));
+  private mapUser(user: User): UserDto {
+    const userDto: UserDto = {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+    };
+    return userDto;
   }
 
-  public update(user: User) : boolean{
-    const users = this.findAll();
-    let idFound = users.findIndex(u => u.id === user.id);
-    if (idFound < 0) return false;
-    users[idFound] = user;
-    this.setLocalStorage(users);
-    return true;
+  public update(user: User): Observable<User> {
+    return this.http.put<User>(
+      `${this.urlApi}/${user.id}/editar`,
+      this.mapUser(user),
+      { headers: this.headers }
+    );
+  }
+
+  private get tokenByLocalStorage(): string {
+    localStorage.setItem(
+      'TOKEN',
+      JSON.stringify(
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZWxpcGUuemFuYXJkbyIsImlhdCI6MTY4OTQ3MjQ4OCwiZXhwIjoxNjg5NDc2MDg4fQ.qhW3VeH_nb0VsOmwGOy3fhFT8PBpX3otAFkf8H8cC4c'
+      )
+    );
+    return JSON.parse(localStorage.getItem('TOKEN') || '');
   }
 }
