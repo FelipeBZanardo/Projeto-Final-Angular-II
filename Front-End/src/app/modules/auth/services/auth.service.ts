@@ -1,37 +1,26 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from '../../users/services/users.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { LoginCredentials } from 'src/app/models/login-credentials.model';
+import { LoginResponse } from 'src/app/models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private usersService: UsersService) {
+  private urlApi = "http://localhost:8080/auth";
+
+  constructor(private usersService: UsersService, private http: HttpClient) {
   }
 
-  public login(credentials: Partial<User>): User | string {
-
-    const userLogin: Partial<User> = {
-      username: credentials.username,
-      password: credentials.password
-    }
-
-    const user = this.usersService.findByUsername(credentials.username!);
-
-    if (!user) {
-      return 'Username não encontrado!';
-    }
-
-    if (user?.password !== credentials.password) {
-      return 'Senha incorreta!';
-    }
-
-    localStorage.setItem('USER', JSON.stringify(user));
-    return user;
+  public login(credentials: LoginCredentials): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.urlApi}/login`, credentials);
   }
 
   public logout(): void {
-    localStorage.removeItem('USER');
+    //localStorage.removeItem('TOKEN');
   }
 }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/modules/users/services/users.service';
 import { AuthService } from '../../services/auth.service';
+import { LoginCredentials } from 'src/app/models/login-credentials.model';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -22,18 +24,24 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    const result = this.authService.login({
-      username: this.username,
-      password: this.password,
-    });
+    const payload: LoginCredentials = {
+      username: this.username!,
+      password: this.password!,
+    };
 
-    console.log(typeof result);
-
-    if (typeof result === 'string') {
-      console.log(result);
-      return;
-    }
-
-    this.router.navigate(['/users']);
+    this.authService
+      .login(payload)
+      .pipe(first())
+      .subscribe({
+        next: (response) => {
+          localStorage.setItem('TOKEN', JSON.stringify(response.token));
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.router.navigate(['/users']);
+        },
+      });
   }
 }

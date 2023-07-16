@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first, map } from 'rxjs';
-import { BetDto } from 'src/app/models/bet.dto';
+import { BetDto } from 'src/app/models/bet.dto.model';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
 
