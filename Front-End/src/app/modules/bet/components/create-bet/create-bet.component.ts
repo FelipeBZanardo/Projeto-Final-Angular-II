@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bet } from 'src/app/models/bet.model';
 import { BetService } from '../../services/bet.service';
-import { distinctUntilChanged, first, map } from 'rxjs';
+import { catchError, distinctUntilChanged, first, map } from 'rxjs';
 import { BetDto } from 'src/app/models/bet.dto';
 
 @Component({
@@ -21,6 +21,7 @@ import { BetDto } from 'src/app/models/bet.dto';
 export class CreateBetComponent implements OnInit {
   public id?: number;
   public title = 'Nova Aposta';
+  public errorMessage?: string;
 
   public betForm!: FormGroup;
 
@@ -40,21 +41,6 @@ export class CreateBetComponent implements OnInit {
   }
 
   public buildForm(): void {
-    const uniqueNumbersValidator = (
-      control: AbstractControl
-    ): ValidationErrors | null => {
-      const dozens = control.value;
-      const selectedNumbers = dozens
-      .map((dozen: any) => dozen.number)
-      .filter((n: any) => n !== null);
-      
-      const uniqueNumbers = [...new Set(selectedNumbers)];
-
-      if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
-        return { duplicateNumbers: true };
-
-      return null;
-    };
 
     this.betForm = new FormGroup({
       id: new FormControl(),
@@ -97,7 +83,7 @@ export class CreateBetComponent implements OnInit {
             ]),
           }),
         ],
-        { validators: uniqueNumbersValidator }
+        { validators: this.uniqueNumbersValidator }
       ),
       betDate: new FormControl(null, [
         Validators.required,
@@ -117,18 +103,19 @@ export class CreateBetComponent implements OnInit {
       .subscribe(
         {
         error: (err) => {
-          console.log(err);
+          this.errorMessage = err.error;
         },
         complete: () => {
           this.router.navigate(['/bet']);
         }});
     } else {
       this.betService.create(this.betForm.getRawValue())
-      .pipe(first())
+      .pipe(first(),
+      )
       .subscribe(
         {
         error: (err) => {
-          console.log(err);
+          this.errorMessage = err.error;
         },
         complete: () => {
           this.router.navigate(['/bet']);
@@ -179,4 +166,18 @@ export class CreateBetComponent implements OnInit {
       }
     });
   }
+
+  private uniqueNumbersValidator = (control: AbstractControl): ValidationErrors | null => {
+    const dozens = control.value;
+    const selectedNumbers = dozens
+    .map((dozen: any) => dozen.number)
+    .filter((n: any) => n !== null);
+    
+    const uniqueNumbers = [...new Set(selectedNumbers)];
+
+    if (uniqueNumbers.length !== 5 && selectedNumbers.length === 5)
+      return { duplicateNumbers: true };
+
+    return null;
+  };
 }
