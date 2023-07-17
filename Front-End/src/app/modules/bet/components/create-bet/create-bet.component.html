@@ -5,13 +5,13 @@
     <fieldset class="my-4">
       <div class="row">
         <div class="col-6">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="custom-form-field">
             <mat-label>Número do sorteio</mat-label>
             <input matInput formControlName="raffleNumber" />
           </mat-form-field>
         </div>
         <div class="col-6">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="date-form-field">
             <mat-label>Data da Aposta</mat-label>
             <input matInput formControlName="betDate" mask="00/00/0000" />
             <mat-error *ngIf="betForm.controls['betDate'].errors?.['pattern']">
@@ -23,24 +23,23 @@
       <fieldset class="dozens">
         <legend class="d-flex justify-content-center pb-4">Dezenas</legend>
         <ng-container formArrayName="dozens">
-          <ng-container class="row" *ngFor="let dozenForm of dozens.controls; let index = index">
-            <div [formGroupName]="index" class="justify-content-between">
+          <ng-container
+            class="row"
+            *ngFor="let dozenForm of dozens.controls; let index = index"
+          >
+            <div [formGroupName]="index" class="justify-content-center">
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'Dezena ' + (index + 1) }}</mat-label>
-                <input matInput formControlName="number" mask="90">
-                <mat-error>
-                  Digite um número de 1 a 80
-                </mat-error>
+                <mat-label>{{ "Dezena " + (index + 1) }}</mat-label>
+                <input matInput formControlName="number" mask="90" />
+                <mat-error> Digite um número de 1 a 80 </mat-error>
               </mat-form-field>
             </div>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="dozens.hasError('duplicateNumbers')">
-          <mat-error>
-            As dezenas não podem ser repetidas.
-          </mat-error>
+          <mat-error> As dezenas não podem ser repetidas. </mat-error>
         </ng-container>
-        <br>
+        <br />
         <ng-container *ngIf="errorMessage">
           <mat-error>
             {{ errorMessage }}
@@ -49,8 +48,14 @@
       </fieldset>
     </fieldset>
     <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
-    <button mat-flat-button (click)="onSubmit()" [disabled]="betForm.invalid" color="primary" cdkFocusInitial
-      type="button">
+    <button
+      mat-flat-button
+      (click)="onSubmit()"
+      [disabled]="betForm.invalid"
+      color="primary"
+      cdkFocusInitial
+      type="button"
+    >
       Salvar
     </button>
   </form>
