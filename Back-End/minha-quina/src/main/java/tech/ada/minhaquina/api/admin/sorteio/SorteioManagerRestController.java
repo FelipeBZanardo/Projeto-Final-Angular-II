@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.ada.minhaquina.api.sorteio.SorteioService;
 import tech.ada.minhaquina.client.SorteioDTO;
 
@@ -27,6 +24,7 @@ public class SorteioManagerRestController {
     }
 
     @Operation(description = "Dados do último sorteio disponível")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
     public SorteioDTO getUltimoResultado() {
         return sorteioService.getUltimoSorteio();

@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [HeaderComponent, NotFoundComponent],
@@ -15,6 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   exports: [HeaderComponent, NotFoundComponent],
 })

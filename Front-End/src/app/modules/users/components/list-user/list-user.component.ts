@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from '../../services/users.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { first, map } from 'rxjs';
 import { UserDto } from 'src/app/models/user.dto';
 
@@ -12,7 +13,10 @@ import { UserDto } from 'src/app/models/user.dto';
 export class ListUserComponent {
   public users!: User[];
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();

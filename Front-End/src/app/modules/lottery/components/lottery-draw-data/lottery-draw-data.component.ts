@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LotteryService } from '../../services/lottery.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { LotteryDraw } from '../../models/lottery-draw.model';
 
 @Component({
   selector: 'app-lottery-draw-data',
@@ -9,7 +8,9 @@ import { LotteryDraw } from '../../models/lottery-draw.model';
   styleUrls: ['./lottery-draw-data.component.css']
 })
 export class LotteryDrawDataComponent implements OnInit {
-public drawData?: LotteryDraw;
+[x: string]: any;
+// public drawData?: LotteryDraw;
+public drawData?: string;
 private localStorageToken = localStorage.getItem('TOKEN');
   constructor(
     private lotteryService: LotteryService,
@@ -25,10 +26,10 @@ private localStorageToken = localStorage.getItem('TOKEN');
       .getLotteryLastDrawData()
       .subscribe({
         next: (response) => {
-          this.drawData = response;
+          this.drawData =JSON.stringify(response);
         },
         error: (err) => {
-          this.snackbarService.openSnackBar(err.error.message);
+          this.snackbarService.openSnackBar(err.message);
         },
       });
   }

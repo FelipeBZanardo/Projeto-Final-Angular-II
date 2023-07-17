@@ -39,10 +39,10 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.roles = [Role.ADMIN, Role.USER];
-    this.buildForm();
+    // this.roles = [Role.ADMIN, Role.USER];
+    // this.buildForm();
 
-    this.id = this.route.snapshot.params['id'];
+    // this.id = this.route.snapshot.params['id'];
 
     if (this.id) {
       this.title = 'Editar Usuário';
