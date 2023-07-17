@@ -1,24 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/modules/users/services/users.service';
 import { AuthService } from '../../services/auth.service';
 import { LoginCredentials } from 'src/app/models/login-credentials.model';
 import { first } from 'rxjs';
+import { UserDto } from 'src/app/models/user.dto';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   public username?: string;
   public password?: string;
-  public users!: User[];
   public hide = true;
   public errorMessage?: string;
+  public users!: Observable<UserDto[]>;
 
-  constructor(private router: Router, private authService: AuthService, private usersService: UsersService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private usersService: UsersService
+  ) {}
 
   ngOnInit(): void {
     this.users = this.usersService.findAll();

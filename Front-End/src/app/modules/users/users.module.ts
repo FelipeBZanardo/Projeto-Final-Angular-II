@@ -12,15 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatSelectModule} from '@angular/material/select';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [
-    UsersComponent,
-    CreateUserComponent,
-    ListUserComponent
-  ],
+  declarations: [UsersComponent, CreateUserComponent, ListUserComponent],
   imports: [
     UsersRoutingModule,
     CommonModule,
@@ -32,7 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatCardModule,
     MatIconModule,
     MatDividerModule,
-    MatSelectModule
-  ]
+    MatSelectModule,
+    MatTooltipModule,
+  ],
 })
-export class UsersModule { }
+export class UsersModule {}
