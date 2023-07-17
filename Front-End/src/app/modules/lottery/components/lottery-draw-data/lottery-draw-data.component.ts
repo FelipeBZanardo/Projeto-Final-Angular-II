@@ -10,6 +10,7 @@ import { LotteryDraw } from '../../models/lottery-draw.model';
 })
 export class LotteryDrawDataComponent implements OnInit {
 public drawData?: LotteryDraw;
+private localStorageToken = localStorage.getItem('TOKEN');
   constructor(
     private lotteryService: LotteryService,
     private snackbarService: SnackbarService
