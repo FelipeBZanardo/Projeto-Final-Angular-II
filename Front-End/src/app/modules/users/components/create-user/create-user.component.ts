@@ -26,6 +26,18 @@ export class CreateUserComponent implements OnInit {
     private usersService: UsersService
   ) {}
 
+  public errorMessages: { [key: string]: string } = {
+    username: `Deve possuir entre 5 e 20 caracteres. Pode conter letras maiúsculas e minúsculas, números, sublinhados e pontos.`,
+    password: `Deve possuir entre 8 e 20 caracteres. Deve conter pelo menos um número, uma letra minúscula, uma letra maiúscula e um caractere especial.`,
+    // Adicione outras mensagens de erro para campos adicionais, se necessário.
+  };
+
+  public getErrorMessage(field: string): string {
+    return (
+      this.errorMessages[field] || 'Ocorreu um erro ao processar a solicitação.'
+    );
+  }
+
   ngOnInit(): void {
     this.roles = [Role.ADMIN, Role.USER];
     this.buildForm();
@@ -41,12 +53,20 @@ export class CreateUserComponent implements OnInit {
   public buildForm(): void {
     this.userForm = new FormGroup({
       id: new FormControl(),
-      username: new FormControl(null, [Validators.required]),
+      username: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('[\\w\\p{L}.]{5,20}'),
+      ]),
       email: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      password: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(
+          "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$"
+        ),
+      ]),
       role: new FormControl(null, [Validators.required]),
     });
   }

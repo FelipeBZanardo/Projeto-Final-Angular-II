@@ -7,13 +7,15 @@
         <div class="col-6">
           <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
-            <input matInput formControlName="username" />
+            <input matInput formControlName="username" [matTooltip]="getErrorMessage('username')"
+              matTooltipPosition="right" />
           </mat-form-field>
         </div>
         <div class="col-6">
           <mat-form-field appearance="outline">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" />
+            <mat-error>Deve ser um e-mail válido.</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -21,7 +23,8 @@
         <div class="col-6">
           <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
-            <input matInput formControlName="password" />
+            <input matInput formControlName="password" [matTooltip]="getErrorMessage('password')"
+              matTooltipPosition="right" />
           </mat-form-field>
         </div>
         <div class="col-6">
@@ -32,14 +35,10 @@
                 {{ role }}
               </mat-option>
             </mat-select>
+            <mat-error>Selecione um tipo de usuário.</mat-error>
           </mat-form-field>
         </div>
       </div>
-      <ng-container *ngIf="errorMessage">
-        <mat-error>
-          {{ errorMessage }}
-        </mat-error>
-      </ng-container>
     </fieldset>
     <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
     <button mat-flat-button (click)="onSubmit()" [disabled]="userForm.invalid" color="primary" cdkFocusInitial
