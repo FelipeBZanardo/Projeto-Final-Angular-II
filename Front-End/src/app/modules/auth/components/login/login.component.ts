@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/modules/users/services/users.service';
 import { AuthService } from '../../services/auth.service';
 import { LoginCredentials } from 'src/app/models/login-credentials.model';
-import { first } from 'rxjs';
+import { first, map } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserDto } from 'src/app/models/user.dto';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   public password?: string;
   public hide = true;
   public errorMessage?: string;
-  public users!: Observable<UserDto[]>;
+  public users!: UserDto[];
 
   constructor(
     private router: Router,
@@ -29,14 +30,31 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // this.users = this.usersService.findAll();
-    this.usersService.findAll().subscribe({
-      next: (response) => {
-        this.users = response;
-      },
-      error: (err) => {
-        this.snackbarService.openSnackBar(err.message);
-      },
-    });
+    this.usersService
+      .findAll()
+      // .pipe(
+      //   first(),
+      //   map((userDtos: UserDto[]) =>
+      //     userDtos.map((userDto) => {
+      //       const mappedUser: User = {
+      //         id: userDto.id!,
+      //         username: userDto.username,
+      //         email: userDto.email,
+      //         password: userDto.password!,
+      //         role: userDto.role,
+      //       };
+      //       return mappedUser;
+      //     })
+      //   )
+      // )
+      .subscribe({
+        next: (response) => {
+          this.users = response;
+        },
+        error: (err) => {
+          this.snackbarService.openSnackBar(err.message);
+        },
+      });
   }
 
   public login(): void {
@@ -44,13 +62,11 @@ export class LoginComponent implements OnInit {
       username: this.username!,
       password: this.password!,
     };
-
     this.authService
       .login(payload)
       .pipe(first())
       .subscribe({
         next: (response) => {
-          // localStorage.setItem('TOKEN', JSON.stringify(response.token));
           localStorage.setItem('TOKEN', response.token);
         },
         error: (err) => {

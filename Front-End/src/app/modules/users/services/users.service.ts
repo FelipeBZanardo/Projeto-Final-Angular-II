@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserDto } from 'src/app/models/user.dto';
 
@@ -12,16 +11,14 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   private urlApi = 'http://localhost:8080/minha-quina/api/v1/usuarios';
-  private headers = { Authorization: `Bearer ${this.tokenByLocalStorage}` };
+  // private headers = { Authorization: `Bearer ${this.tokenByLocalStorage}` };
 
   public findAll(): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(this.urlApi, { headers: this.headers });
+    return this.http.get<UserDto[]>(this.urlApi);
   }
 
   public findById(id: number): Observable<UserDto> {
-    return this.http.get<UserDto>(`${this.urlApi}/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.get<UserDto>(`${this.urlApi}/${id}`);
   }
 
   // todo: endpoint find by username
@@ -35,15 +32,12 @@ export class UsersService {
   public create(user: User): Observable<UserDto> {
     return this.http.post<UserDto>(
       `${this.urlApi}/cadastro`,
-      this.mapUser(user),
-      { headers: this.headers }
+      this.mapUser(user)
     );
   }
 
   public delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.urlApi}/${id}/deletar`, {
-      headers: this.headers,
-    });
+    return this.http.delete<void>(`${this.urlApi}/${id}/deletar`);
   }
 
   private mapUser(user: User): UserDto {
@@ -59,12 +53,11 @@ export class UsersService {
   public update(user: User): Observable<User> {
     return this.http.put<User>(
       `${this.urlApi}/${user.id}/editar`,
-      this.mapUser(user),
-      { headers: this.headers }
+      this.mapUser(user)
     );
   }
 
-  private get tokenByLocalStorage(): string {
-    return JSON.parse(localStorage.getItem('TOKEN') || '');
-  }
+  // private get tokenByLocalStorage(): string {
+  //   return JSON.parse(localStorage.getItem('TOKEN') || '');
+  // }
 }
