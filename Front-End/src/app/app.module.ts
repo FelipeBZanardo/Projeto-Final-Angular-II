@@ -23,9 +23,8 @@ import { AuthInterceptorService } from './shared/services/AuthInterceptor.servic
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi: true
+      multi: true,
     },
-    // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],
 })
