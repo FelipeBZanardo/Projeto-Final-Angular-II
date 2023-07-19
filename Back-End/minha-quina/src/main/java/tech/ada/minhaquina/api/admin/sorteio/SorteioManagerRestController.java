@@ -31,6 +31,7 @@ public class SorteioManagerRestController {
     }
 
     @Operation(description = "Dados do sorteio de acordo com o número do sorteio")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{numero}")
     public SorteioDTO getResultadoByNumeroSorteio(@PathVariable Integer numero) {
         return sorteioService.getSorteioByNumeroSorteio(numero);

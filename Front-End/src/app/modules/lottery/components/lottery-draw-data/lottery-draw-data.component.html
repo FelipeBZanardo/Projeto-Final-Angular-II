@@ -1,11 +1,74 @@
-<h3>Dados (trocar por um card)</h3>
+<div class="container mt-5">
+  <mat-card class="mb-4">
+    <mat-card-header>
+      <mat-card-title> Número Sorteio: {{ drawData?.numero }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
 
-<p>{{ drawData?.numero }}</p>
-<!-- {{numeroConcursoProximo}}
-{{acumulado}}
-{{dataSorteio}}
-{{dataProximoSorteio}}
-{{valorAcumuladoProximoConcurso}}
-{{numero}}
-{{listaDezenas}}
-{{listaRateioPremio}} -->
+    <mat-card-content>
+      <p>
+        <strong>Data do Sorteio:</strong>
+        {{ drawData?.dataSorteio | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>Dezenas Sorteadas:</strong>
+      </p>
+      <mat-chip-set>
+        <mat-chip *ngFor="let dezena of drawData?.listaDezenas">
+          {{ dezena }}
+        </mat-chip>
+      </mat-chip-set>
+      <p>
+        <strong>Número próximo Sorteio:</strong>
+        {{ drawData?.numeroConcursoProximo }}
+      </p>
+      <p>
+        <strong>Acumulado:</strong> {{ drawData?.acumulado ? "Sim" : "Não" }}
+      </p>
+      <p>
+        <strong>Data Sorteio:</strong>
+        {{ drawData?.dataSorteio | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>Data Próximo Sorteio:</strong>
+        {{ drawData?.dataProximoSorteio | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        Valor acumulado:
+        {{ drawData?.valorAcumuladoProximoConcurso | currency : "BRL" }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-end">
+      <button mat-icon-button color="primary" (click)="onPrevious()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="onNext()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </mat-card-actions>
+
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h3>Visualizar Premiações</h3>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let premio of drawData?.listaRateioPremio">
+          <mat-divider class="my-3"></mat-divider>
+
+          <p>Faixa: {{ premio.faixa }}</p>
+          <p>Descrição: {{ premio.descricaoFaixa }}</p>
+          <p>Ganhadores: {{ premio.numeroDeGanhadores | number }}</p>
+          <p>
+            Valor:
+            {{ premio.valorPremio | currency : "BRL" : "symbol" : "1.2-2" }}
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>
