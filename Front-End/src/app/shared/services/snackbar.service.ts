@@ -9,7 +9,9 @@ export class SnackbarService {
 
   openSnackBar(message?: string) {
     this._snackBar.open(
-      message || 'O servidor não está respondendo, tente novamente mais tarde.'
+      message || 'O servidor não está respondendo, tente novamente mais tarde.',
+      'Fechar',
+      { duration: 3000 }
     );
   }
 }
