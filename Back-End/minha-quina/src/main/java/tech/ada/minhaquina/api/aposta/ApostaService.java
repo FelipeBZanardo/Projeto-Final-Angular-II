@@ -1,9 +1,12 @@
 package tech.ada.minhaquina.api.aposta;
 
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import tech.ada.minhaquina.api.exception.DataJogoException;
 import tech.ada.minhaquina.api.exception.NumeroSorteioException;
+import tech.ada.minhaquina.api.resultado.ResultadoRepository;
+import tech.ada.minhaquina.api.resultado.ResultadoService;
 import tech.ada.minhaquina.api.usuario.UsuarioModel;
 import tech.ada.minhaquina.api.usuario.UsuarioRepository;
 import tech.ada.minhaquina.client.QuinaRestClient;
@@ -19,11 +22,14 @@ public class ApostaService {
     private final ApostaRepository apostaRepository;
     private final QuinaRestClient quinaRestClient;
     private final UsuarioRepository usuarioRepository;
+    private final ResultadoService resultadoService;
 
-    public ApostaService(ApostaRepository apostaRepository, QuinaRestClient quinaRestClient, UsuarioRepository usuarioRepository) {
+    public ApostaService(ApostaRepository apostaRepository, QuinaRestClient quinaRestClient, UsuarioRepository usuarioRepository,
+                         ResultadoService resultadoService) {
         this.apostaRepository = apostaRepository;
         this.quinaRestClient = quinaRestClient;
         this.usuarioRepository = usuarioRepository;
+        this.resultadoService = resultadoService;
     }
 
     public List<ApostaDTO> getAllApostas(UserDetails userDetails) {
@@ -49,7 +55,9 @@ public class ApostaService {
         return salvarAposta(apostaAModificar, apostaDTO, usuarioModel);
     }
 
+    @Transactional
     public void deleteAposta(UserDetails userDetails, Long apostaId) throws NoSuchElementException {
+        resultadoService.deleteResultadoByApostaId(apostaId);
         ApostaModel aposta = getApostaModelByUsuarioNameAndId(userDetails.getUsername(), apostaId);
         apostaRepository.delete(aposta);
     }

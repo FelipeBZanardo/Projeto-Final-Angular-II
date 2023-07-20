@@ -1,5 +1,6 @@
 package tech.ada.minhaquina.api.resultado;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import tech.ada.minhaquina.api.aposta.ApostaModel;
 import tech.ada.minhaquina.api.aposta.ApostaRepository;
@@ -29,6 +30,11 @@ public class ResultadoService {
         this.apostaRepository = apostaRepository;
         this.sorteioRepository = sorteioRepository;
         this.sorteioService = sorteioService;
+    }
+
+    @Transactional
+    public void deleteResultadoByApostaId(Long apostaId) {
+        resultadoRepository.deleteByApostaId(apostaId);
     }
 
     public ResultadoResponse getResultadoByAposta(Long apostaId) {
