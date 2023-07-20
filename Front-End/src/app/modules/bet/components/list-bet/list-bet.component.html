@@ -1,3 +1,6 @@
+<ng-container *ngIf="!bets || bets.length === 0">
+  <h1>Não há apostas cadastradas até o momento</h1>
+</ng-container>
 <div class="container">
     <div class="row my-4">
       <div class="col-4" *ngFor="let bet of bets">
@@ -40,7 +43,7 @@
                  Visualizar Resultado da aposta
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <app-result></app-result>
+              <app-result [betId]="bet.id"></app-result>
             </mat-expansion-panel>
           </mat-accordion>
         </mat-card>
