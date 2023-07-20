@@ -88,6 +88,9 @@ export class CreateUserComponent implements OnInit {
         })
       )
       .subscribe({
+        next: (response) => {
+          this.userForm.patchValue(response as User);
+        },
         error: (err) => {
           console.log(err);
         },
