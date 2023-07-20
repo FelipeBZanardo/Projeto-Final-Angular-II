@@ -55,17 +55,20 @@ public class UsuarioService {
     }
 
     public UsuarioResponse updateUsuario(Long id, UsuarioRequest usuarioRequest) {
-        verificarDuplicidade(usuarioRequest);
-        UsuarioModel user = UsuarioModel.builder()
-                .email(usuarioRequest.getEmail())
-                .username(usuarioRequest.getUsername())
-                .role(Enum.valueOf(Role.class, usuarioRequest.getRole().toUpperCase()))
-                .password(passwordEncoder.encode(usuarioRequest.getPassword()))
-                .build();
-        user.setId(id);
+        Optional<UsuarioModel> optionalUser = usuarioRepository.findById(id);
 
-        usuarioRepository.save(user);
-        return new UsuarioResponse(user);
+        if (optionalUser.isPresent()) {
+            UsuarioModel user = optionalUser.get();
+            user.setEmail(usuarioRequest.getEmail());
+            user.setUsername(usuarioRequest.getUsername());
+            user.setRole(Enum.valueOf(Role.class, usuarioRequest.getRole().toUpperCase()));
+            user.setPassword(passwordEncoder.encode(usuarioRequest.getPassword()));
+
+            usuarioRepository.save(user);
+            return new UsuarioResponse(user);
+        } else {
+            throw new RuntimeException("Usuário não encontrado com o ID: " + id);
+        }
     }
 
     public void deleteUsuario(Long id) {
