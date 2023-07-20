@@ -14,4 +14,6 @@ public interface ResultadoRepository extends JpaRepository<ResultadoModel, Long>
                                                                               SorteioModel sorteioModel,
                                                                               Integer pontuacao,
                                                                               BigDecimal valorPremio);
+
+    void deleteByApostaId(Long apostaId);
 }
