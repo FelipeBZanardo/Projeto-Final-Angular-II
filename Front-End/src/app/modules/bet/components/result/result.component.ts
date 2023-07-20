@@ -1,34 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Result } from 'src/app/models/result.model';
+import { ResultService } from '../../services/result.service';
+import { first, map, single } from 'rxjs';
+import { ResultDto } from 'src/app/models/result.dto.model';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent {
+export class ResultComponent implements OnInit{
+  @Input() public betId!: number;
 
+  public result?: Result;
+  public errorMessage?: string;
 
-  public result: Result = {
-    raffleNumber: 6100,
-    raffleDate: '2023-06-06',
-    dozensDrawn: [
-      1,
-		  26,
-		  48,
-		  55,
-		  63
-    ],
-    dozensBet: [
-      2,
-		  58,
-		  25,
-		  62,
-		  3
-    ],
-    accumulated: false,
-    score: 0,
-    award: 0
-  }
+  constructor(private resultService: ResultService){}
+
+  ngOnInit(): void {
+    this.resultService.findById(this.betId)
+    .pipe(single(),
+    first(),
+      map((resultDto: ResultDto) => {
+      const mappedResult: Result = {
+        raffleNumber: resultDto.numeroSorteio,
+        raffleDate: resultDto.dataSorteio,
+        dozensDrawn: resultDto.dezenasSorteadas,
+        dozensBet: resultDto.dezenasApostadas,
+        accumulated: resultDto.acumulado,
+        score: resultDto.pontuacao,
+        award: resultDto.valorPremio,
+      }
+      return mappedResult;
+    }))
+    .subscribe({
+      next: (response) => {
+        this.result = response;
+      },
+      error: (err) => {
+        this.errorMessage = err.error;
+      }
+    });
+}
 
 }
