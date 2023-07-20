@@ -7,13 +7,5 @@ export interface Result {
     accumulated: boolean;
     score: number;
     award: number;
-
-    /*numeroSorteio: number;
-    dataSorteio: string;
-    dezenasSorteadas: number[];
-    dezenasApostadas: number[];
-    acumulado: boolean;
-    pontuacao: number;
-    valorPremio: number;*/
 }
 
