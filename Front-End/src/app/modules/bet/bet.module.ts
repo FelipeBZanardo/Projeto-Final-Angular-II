@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +16,10 @@ import { CreateBetComponent } from './components/create-bet/create-bet.component
 import { ListBetComponent } from './components/list-bet/list-bet.component';
 import { ResultComponent } from './components/result/result.component';
 import { NgxMaskModule } from 'ngx-mask';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     BetComponent,
@@ -41,5 +43,6 @@ import { NgxMaskModule } from 'ngx-mask';
     MatExpansionModule,
     NgxMaskModule,
   ],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
 })
 export class BetModule {}
