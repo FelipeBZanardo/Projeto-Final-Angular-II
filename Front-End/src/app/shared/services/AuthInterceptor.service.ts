@@ -13,7 +13,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       return next.handle(request);
     }
     // Get the token from the local storage
-    const token = localStorage.getItem('TOKEN');
+    const token = sessionStorage.getItem('TOKEN');
 
     // Clone the request and add the authorization header with the token
     const authReq = request.clone({
