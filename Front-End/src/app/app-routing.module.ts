@@ -5,12 +5,12 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'users',
+    redirectTo: 'auth/login',
     pathMatch: 'full',
   }, 
   { 
     path: 'auth', 
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) 
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   }, 
   { 
     path: 'users', 
