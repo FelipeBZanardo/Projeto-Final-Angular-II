@@ -1,11 +1,8 @@
 package tech.ada.minhaquina.api.usuario;
 
 import jakarta.validation.Valid;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.ada.minhaquina.api.aposta.ApostaDTO;
 
 import java.util.List;
 import java.util.NoSuchElementException;
