@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
@@ -8,8 +8,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-
-  constructor (private authService: AuthService, private router: Router) {}
+  constructor (public authService: AuthService, private router: Router) {}
 
   public logout(): void {
     this.authService.logout();
