@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import tech.ada.minhaquina.api.exception.DataJogoException;
 import tech.ada.minhaquina.api.exception.NumeroSorteioException;
-import tech.ada.minhaquina.api.resultado.ResultadoRepository;
 import tech.ada.minhaquina.api.resultado.ResultadoService;
 import tech.ada.minhaquina.api.usuario.UsuarioModel;
 import tech.ada.minhaquina.api.usuario.UsuarioRepository;
@@ -97,6 +96,4 @@ public class ApostaService {
         return apostaRepository.findByUsuarioUsernameAndId(username, apostaId)
                 .orElseThrow(() -> new NoSuchElementException("Id da aposta não existe"));
     }
-
-
 }
