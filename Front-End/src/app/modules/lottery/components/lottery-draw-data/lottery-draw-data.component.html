@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <mat-card class="mb-4">
     <mat-card-header>
-      <mat-card-title> Número Sorteio: {{ drawData?.numero }}</mat-card-title>
+      <mat-card-title> Número Sorteio: {{ drawData?.numero }} </mat-card-title>
     </mat-card-header>
     <mat-divider class="my-3"></mat-divider>
 
@@ -12,6 +12,13 @@
       </p>
       <p>
         <strong>Dezenas Sorteadas:</strong>
+        <span class="float-right" *ngIf="drawData?.acumulado">
+          <img
+            class="accumulated-image"
+            src="../../../assets/images/acumulou.gif"
+            alt=""
+          />
+        </span>
       </p>
       <mat-chip-set>
         <mat-chip *ngFor="let dezena of drawData?.listaDezenas">
@@ -22,9 +29,9 @@
         <strong>Número próximo Sorteio:</strong>
         {{ drawData?.numeroConcursoProximo }}
       </p>
-      <p>
+      <!-- <p>
         <strong>Acumulado:</strong> {{ drawData?.acumulado ? "Sim" : "Não" }}
-      </p>
+      </p> -->
       <p>
         <strong>Data Sorteio:</strong>
         {{ drawData?.dataSorteio | date : "dd MMMM yyyy" }}
