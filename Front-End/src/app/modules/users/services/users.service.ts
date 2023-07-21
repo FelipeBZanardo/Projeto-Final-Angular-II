@@ -11,7 +11,6 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   private urlApi = 'http://localhost:8080/minha-quina/api/v1/usuarios';
-  // private headers = { Authorization: `Bearer ${this.tokenByLocalStorage}` };
 
   public findAll(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(this.urlApi);
@@ -19,14 +18,6 @@ export class UsersService {
 
   public findById(id: number): Observable<UserDto> {
     return this.http.get<UserDto>(`${this.urlApi}/${id}`);
-  }
-
-  // todo: endpoint find by username
-  public findByUsername(username: string): Observable<UserDto> {
-    return new Observable<UserDto>();
-    // return this.http.get<UserDto>(`${this.urlApi}/username/${username}`, {
-    //   headers: this.headers,
-    // });
   }
 
   public create(user: User): Observable<UserDto> {
@@ -56,8 +47,4 @@ export class UsersService {
       this.mapUser(user)
     );
   }
-
-  // private get tokenByLocalStorage(): string {
-  //   return JSON.parse(localStorage.getItem('TOKEN') || '');
-  // }
 }
