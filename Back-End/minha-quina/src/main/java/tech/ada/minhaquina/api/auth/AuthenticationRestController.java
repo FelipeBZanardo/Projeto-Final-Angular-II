@@ -34,7 +34,7 @@ public class AuthenticationRestController {
         authenticationManager.authenticate(authentication);
         UsuarioModel user = userJpaRepository.findByUsername(request.username()).orElseThrow();
         String token = jwtService.createToken(user);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token, user.getRole());
     }
 
     @SecurityRequirement(name = "Admin")
