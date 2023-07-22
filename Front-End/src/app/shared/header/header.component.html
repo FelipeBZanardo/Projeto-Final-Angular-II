@@ -11,8 +11,10 @@
     <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
       <button mat-button routerLink="/lottery">Sorteios</button>
     </ng-container>
-    <button mat-icon-button (click)="logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
+    <ng-container *ngIf="(authService.isLoggedIn() | async)">
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </ng-container>
   </div>
 </mat-toolbar>
