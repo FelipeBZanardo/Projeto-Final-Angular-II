@@ -1,17 +1,17 @@
-<div class="container my-4">
+<div class="container form">
   <h1 class="d-flex justify-content-center m-4">{{ title }}</h1>
 
   <form [formGroup]="userForm">
     <fieldset>
       <div class="row">
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input matInput formControlName="username" [matTooltip]="getErrorMessage('username')"
               matTooltipPosition="right" />
           </mat-form-field>
         </div>
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" />
@@ -20,14 +20,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
             <input matInput formControlName="password" [matTooltip]="getErrorMessage('password')"
               matTooltipPosition="right" />
           </mat-form-field>
         </div>
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Tipo de usuário</mat-label>
             <mat-select formControlName="role">
@@ -40,10 +40,12 @@
         </div>
       </div>
     </fieldset>
-    <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
-    <button mat-flat-button (click)="onSubmit()" [disabled]="userForm.invalid" color="primary" cdkFocusInitial
-      type="button">
-      Salvar
-    </button>
+    <div class="d-flex justify-content-center p-2">
+      <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
+      <button mat-flat-button (click)="onSubmit()" [disabled]="userForm.invalid" color="primary" cdkFocusInitial
+        type="button">
+        Salvar
+      </button>
+    </div>
   </form>
 </div>
