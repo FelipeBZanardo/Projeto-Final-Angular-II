@@ -7,23 +7,26 @@ const routes: Routes = [
     path: '',
     redirectTo: 'auth/login',
     pathMatch: 'full',
-  }, 
-  { 
-    path: 'auth', 
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
-  }, 
-  { 
-    path: 'users', 
-    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule) 
   },
-  { 
-    path: 'bet', 
-    loadChildren: () => import('./modules/bet/bet.module').then(m => m.BetModule) 
-  }, 
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./modules/users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: 'bet',
+    loadChildren: () =>
+      import('./modules/bet/bet.module').then((m) => m.BetModule),
+  },
   {
     path: 'lottery',
     loadChildren: () =>
-      import('./modules/lottery/lottery.module').then(m => m.LotteryModule)
+      import('./modules/lottery/lottery.module').then((m) => m.LotteryModule),
   },
   {
     path: '**',
@@ -33,6 +36,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

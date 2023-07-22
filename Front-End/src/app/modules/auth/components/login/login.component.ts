@@ -26,18 +26,7 @@ export class LoginComponent implements OnInit {
     private snackbarService: SnackbarService
   ) {}
 
-  ngOnInit(): void {
-    this.usersService
-      .findAll()
-      .subscribe({
-        next: (response) => {
-          this.users = response;
-        },
-        error: (err) => {
-          this.snackbarService.openSnackBar(err.message);
-        },
-      });
-  }
+  ngOnInit(): void {}
 
   public login(): void {
     const payload: LoginCredentials = {
@@ -50,7 +39,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (response) => {
           sessionStorage.setItem('TOKEN', response.token);
-          sessionStorage.setItem('ROLE', JSON.stringify(response.role));
+          sessionStorage.setItem('ROLE', response.role);
         },
         error: (err) => {
           this.errorMessage = 'Credenciais inválidas. Tente novamente!';

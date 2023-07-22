@@ -18,9 +18,8 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.urlApi}/login`, credentials);
   }
 
-  public logout(): void {
-    sessionStorage.removeItem('TOKEN');  
-    sessionStorage.removeItem('ROLE');  
+  public logout(): Observable<string> {
+    return this.http.get<string>(`${this.urlApi}/logout`);
   }
 
   public isLoggedIn(): Observable<boolean> {
@@ -28,31 +27,22 @@ export class AuthService {
     return token ? of(true) : of(false);
   }
 
-  public checkUserRoles(roles: Role[]): Observable<boolean> {
+  public checkUserRoles(roles: string): Observable<boolean> {
     return new Observable<boolean>((subscriber) => {
-      
-      const roleUser = JSON.parse(
-        sessionStorage.getItem('ROLE') || 'undefined'
-      );
-
+      const roleUser = sessionStorage.getItem('ROLE') || '';
+      console.log(roleUser);
       if (roles.includes(roleUser)) {
         subscriber.next(true);
+      } else {
+        subscriber.next(false);
       }
-
-      subscriber.next(false);
     });
   }
 
   public getRole(): Observable<string> {
     return new Observable<string>((subscriber) => {
-
-      const roleUser = JSON.parse(
-        sessionStorage.getItem('ROLE') || ''
-      );
-      
+      const roleUser = sessionStorage.getItem('ROLE') || '';
       subscriber.next(roleUser);
     });
   }
-
-
 }
