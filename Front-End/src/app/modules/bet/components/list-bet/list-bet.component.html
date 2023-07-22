@@ -1,9 +1,9 @@
 <ng-container *ngIf="!bets || bets.length === 0">
-  <h1>Não há apostas cadastradas até o momento</h1>
+  <h1 class="d-flex justify-content-center">Não há apostas cadastradas até o momento</h1>
 </ng-container>
 <div class="container">
-    <div class="row my-4">
-      <div class="col-4" *ngFor="let bet of bets">
+    <div class="row m-auto justify-content-center">
+      <div class="col-12 col-md-4 col-xl-3 mx-5 my-3" *ngFor="let bet of bets">
         <mat-card class="mb-4">
           <mat-card-header>
             <mat-card-title>{{ 'N° Sorteio: '  + bet.raffleNumber }}</mat-card-title>
