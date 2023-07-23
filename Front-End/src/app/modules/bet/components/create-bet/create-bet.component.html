@@ -1,16 +1,16 @@
-<div class="container my-4">
+<div class="container form">
   <h1 class="d-flex justify-content-center m-4">{{ title }}</h1>
 
   <form [formGroup]="betForm">
     <fieldset class="my-4">
       <div class="row">
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline" class="custom-form-field">
             <mat-label>Número do sorteio</mat-label>
             <input matInput formControlName="raffleNumber" />
           </mat-form-field>
         </div>
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6">
           <mat-form-field appearance="outline" class="date-form-field">
             <mat-label>Data da Aposta</mat-label>
             <input matInput formControlName="betDate" mask="00/00/0000" />
@@ -20,14 +20,13 @@
           </mat-form-field>
         </div>
       </div>
-      <fieldset class="dozens">
-        <legend class="d-flex justify-content-center pb-4">Dezenas</legend>
+      <fieldset class="dozens d-flex justify-content-center flex-wrap">
+        <legend class="d-flex justify-content-center py-2">Dezenas</legend>
         <ng-container formArrayName="dozens">
           <ng-container
-            class="row"
             *ngFor="let dozenForm of dozens.controls; let index = index"
           >
-            <div [formGroupName]="index" class="justify-content-center">
+            <div [formGroupName]="index">
               <mat-form-field appearance="outline">
                 <mat-label>{{ "Dezena " + (index + 1) }}</mat-label>
                 <input matInput formControlName="number" mask="90" />
@@ -47,16 +46,18 @@
         </ng-container>
       </fieldset>
     </fieldset>
-    <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
-    <button
-      mat-flat-button
-      (click)="onSubmit()"
-      [disabled]="betForm.invalid"
-      color="primary"
-      cdkFocusInitial
-      type="button"
-    >
-      Salvar
-    </button>
+    <div class="d-flex justify-content-center p-2">
+      <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
+      <button
+        mat-flat-button
+        (click)="onSubmit()"
+        [disabled]="betForm.invalid"
+        color="primary"
+        cdkFocusInitial
+        type="button"
+      >
+        Salvar
+      </button>
+    </div>
   </form>
 </div>

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!--<mat-toolbar color="primary">
   <button mat-button routerLink="/">Minha Quina 🍀</button>
   <span class="spacer"></span>
   <div class="menu">
@@ -17,4 +17,53 @@
       </button>
     </ng-container>
   </div>
-</mat-toolbar>
+</mat-toolbar>-->
+
+<div style="height: 100vh;" class="mb-5">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      
+      <button mat-button routerLink="/">Minha Quina 🍀</button>
+      <span class="spacer"></span>
+      <div fxShow="true" fxHide.lt-md>
+        <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
+          <button mat-button routerLink="/users">Usuários</button>
+          <button mat-button routerLink="/users/create">Cadastrar Usuário</button>
+        </ng-container>
+        <button mat-button routerLink="/bet">Apostas</button>
+        <button mat-button routerLink="/bet/create">Cadastrar Aposta</button>
+        <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
+          <button mat-button routerLink="/lottery">Sorteios</button>
+        </ng-container>
+      </div>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <ng-container *ngIf="(authService.isLoggedIn() | async)">
+        <button mat-icon-button (click)="logout()">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </ng-container>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a (click)="sidenav.toggle()" mat-list-item>Fechar Menu</a>
+        <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
+          <a routerLink="/users" mat-list-item (click)="sidenav.toggle()">Usuários</a>
+          <a routerLink="/users/create" mat-list-item (click)="sidenav.toggle()">Cadastrar Usuário</a>
+        </ng-container>
+        <a routerLink="/bet" mat-list-item (click)="sidenav.toggle()">Apostas</a>
+        <a routerLink="/bet/create" mat-list-item (click)="sidenav.toggle()">Cadastrar Aposta</a>
+        <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
+          <a routerLink="/lottery" mat-list-item (click)="sidenav.toggle()">Sorteios</a>
+        </ng-container>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
