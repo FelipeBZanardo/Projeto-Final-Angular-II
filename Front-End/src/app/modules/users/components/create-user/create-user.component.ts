@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/modules/users/models/user.model';
 import { UsersService } from '../../services/users.service';
 import { Role } from 'src/app/constants/role.enum';
-import { UserDto } from 'src/app/models/user.dto';
+import { UserDto } from 'src/app/modules/users/models/user.dto';
 import { distinctUntilChanged, first, map } from 'rxjs';
 
 @Component({

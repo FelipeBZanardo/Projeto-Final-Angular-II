@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { LoginCredentials } from 'src/app/models/login-credentials.model';
-import { UserDto } from 'src/app/models/user.dto';
+import { LoginCredentials } from 'src/app/modules/auth/models/login-credentials.model';
+import { UserDto } from 'src/app/modules/users/models/user.dto';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

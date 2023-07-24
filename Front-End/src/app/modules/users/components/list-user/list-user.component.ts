@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { first, map } from 'rxjs';
-import { UserDto } from 'src/app/models/user.dto';
-import { User } from 'src/app/models/user.model';
+import { UserDto } from 'src/app/modules/users/models/user.dto';
+import { User } from 'src/app/modules/users/models/user.model';
 import { UsersService } from '../../services/users.service';
 
 @Component({

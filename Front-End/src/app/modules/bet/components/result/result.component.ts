@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { first, map } from 'rxjs';
-import { ResultDto } from 'src/app/models/result.dto.model';
-import { Result } from 'src/app/models/result.model';
+import { ResultDto } from 'src/app/modules/bet/components/result/models/result.dto.model';
+import { Result } from 'src/app/modules/bet/components/result/models/result.model';
 import { ResultService } from '../../services/result.service';
 
 @Component({

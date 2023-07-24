@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResultDto } from 'src/app/models/result.dto.model';
+import { ResultDto } from 'src/app/modules/bet/components/result/models/result.dto.model';
 
 @Injectable({
   providedIn: 'root'
