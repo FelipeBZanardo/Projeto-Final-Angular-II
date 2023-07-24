@@ -7,8 +7,6 @@ import { map } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 export const authGuard = (activatedRoute: ActivatedRouteSnapshot) => {
-  console.log(activatedRoute);
-
   return inject(AuthService)
     .checkUserRoles(activatedRoute.data['roles'])
     .pipe(

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BetDto } from 'src/app/models/bet.dto.model';
-import { Bet } from 'src/app/models/bet.model';
+import { BetDto } from 'src/app/modules/bet/models/bet.dto.model';
+import { Bet } from 'src/app/modules/bet/models/bet.model';
 
 @Injectable({
   providedIn: 'root',

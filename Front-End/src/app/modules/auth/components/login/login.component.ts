@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { LoginCredentials } from 'src/app/models/login-credentials.model';
-import { UserDto } from 'src/app/models/user.dto';
-import { UsersService } from 'src/app/modules/users/services/users.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { LoginCredentials } from 'src/app/modules/auth/models/login-credentials.model';
+import { UserDto } from 'src/app/modules/users/models/user.dto';
 import { AuthService } from '../../services/auth.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +15,12 @@ export class LoginComponent implements OnInit {
   public username?: string;
   public password?: string;
   public hide = true;
-  public errorMessage?: string;
   public users!: UserDto[];
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private usersService: UsersService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {}
@@ -41,8 +38,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('TOKEN', response.token);
           sessionStorage.setItem('ROLE', response.role);
         },
-        error: (err) => {
-          this.errorMessage = 'Credenciais inválidas. Tente novamente!';
+        error: () => {
+          this.snackbarService.openSnackBar('Credenciais inválidas. Tente novamente!');
         },
         complete: () => {
           this.router.navigate(['/bet']);

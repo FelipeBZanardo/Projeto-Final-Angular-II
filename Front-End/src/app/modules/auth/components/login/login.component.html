@@ -14,11 +14,6 @@
             <input matInput [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'"/>
             <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </mat-form-field>
-          <ng-container *ngIf="errorMessage">
-            <mat-error>
-              {{ errorMessage }}
-            </mat-error>
-          </ng-container>
           <br>
           <button
             mat-flat-button

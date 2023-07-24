@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Result } from 'src/app/models/result.model';
+import { first, map } from 'rxjs';
+import { ResultDto } from 'src/app/modules/bet/components/result/models/result.dto.model';
+import { Result } from 'src/app/modules/bet/components/result/models/result.model';
 import { ResultService } from '../../services/result.service';
-import { first, map, single } from 'rxjs';
-import { ResultDto } from 'src/app/models/result.dto.model';
 
 @Component({
   selector: 'app-result',
@@ -19,8 +19,8 @@ export class ResultComponent implements OnInit{
 
   ngOnInit(): void {
     this.resultService.findById(this.betId)
-    .pipe(single(),
-    first(),
+    .pipe(
+      first(),
       map((resultDto: ResultDto) => {
       const mappedResult: Result = {
         raffleNumber: resultDto.numeroSorteio,
