@@ -35,11 +35,13 @@
             </div>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="dozens.hasError('duplicateNumbers')">
-          <mat-error> As dezenas não podem ser repetidas. </mat-error>
-        </ng-container>
         <br />
       </fieldset>
+      <ng-container *ngIf="dozens.hasError('duplicateNumbers')">
+        <mat-error class="d-flex justify-content-center mt-4"> 
+          As dezenas não podem ser repetidas. 
+        </mat-error>
+      </ng-container>
       <ng-container *ngIf="errorMessage">
         <mat-error class="d-flex justify-content-center mt-4">
           {{ errorMessage }}
