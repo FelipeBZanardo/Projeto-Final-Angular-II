@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { LoginCredentials } from 'src/app/models/login-credentials.model';
 import { UserDto } from 'src/app/models/user.dto';
-import { UsersService } from 'src/app/modules/users/services/users.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -22,8 +20,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private usersService: UsersService,
-    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {}

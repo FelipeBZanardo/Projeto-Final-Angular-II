@@ -1,24 +1,3 @@
-<!--<mat-toolbar color="primary">
-  <button mat-button routerLink="/">Minha Quina 🍀</button>
-  <span class="spacer"></span>
-  <div class="menu">
-    <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
-      <button mat-button routerLink="/users">Usuários</button>
-      <button mat-button routerLink="/users/create">Cadastrar Usuário</button>
-    </ng-container>
-    <button mat-button routerLink="/bet">Apostas</button>
-    <button mat-button routerLink="/bet/create">Cadastrar Aposta</button>
-    <ng-container *ngIf="(authService.getRole() | async) === 'ADMIN'">
-      <button mat-button routerLink="/lottery">Sorteios</button>
-    </ng-container>
-    <ng-container *ngIf="(authService.isLoggedIn() | async)">
-      <button mat-icon-button (click)="logout()">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </ng-container>
-  </div>
-</mat-toolbar>-->
-
 <div style="height: 100vh;" class="mb-5">
   <mat-toolbar color="primary">
     <mat-toolbar-row>

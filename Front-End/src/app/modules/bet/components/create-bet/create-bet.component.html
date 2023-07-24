@@ -39,12 +39,12 @@
           <mat-error> As dezenas não podem ser repetidas. </mat-error>
         </ng-container>
         <br />
-        <ng-container *ngIf="errorMessage">
-          <mat-error>
-            {{ errorMessage }}
-          </mat-error>
-        </ng-container>
       </fieldset>
+      <ng-container *ngIf="errorMessage">
+        <mat-error class="d-flex justify-content-center mt-4">
+          {{ errorMessage }}
+        </mat-error>
+      </ng-container>
     </fieldset>
     <div class="d-flex justify-content-center p-2">
       <button mat-flat-button (click)="onCancel()" type="button">Voltar</button>
